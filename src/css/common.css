@@ -17,8 +17,14 @@ img {
   max-width: 100%;
 }
 
-button {
+/* button {
   font-size:24px;
   padding: 5px 20px;
   border-radius: 4px;
+ } */
+
+ .timer {
+  display: flex;
+  gap: 15px;
+  
  }
