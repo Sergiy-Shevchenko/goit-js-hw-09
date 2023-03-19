@@ -44,11 +44,11 @@ startBtn.addEventListener('click', () => {
   intervalId = setInterval(()=>{
   const startData = fp.selectedDates[0].getTime() - Date.now();
   console.log(startData);
-  const time =  convertMs(startData);
+  //const time =  convertMs(startData);
   console.log(time);
   
   overrwriteTime(time);
-  console.log(startData);
+  
   
   if (startData < 1000) {
   startBtn.disabled =  false;
