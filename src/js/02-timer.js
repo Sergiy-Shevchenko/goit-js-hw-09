@@ -17,43 +17,85 @@ let intervalId = null;
 startBtn.disabled = true;
 
 
+//----------2-variant----
 const options = {
-    enableTime: true,
-    time_24hr: true,
-    defaultDate: new Date(),
-    minuteIncrement: 1,
-    onClose(selectedDates) {
-      //console.log(selectedDates[0]);
-            
-      if (selectedDates[0] <= new Date()) {
-        
-        Notify.failure('Please choose a date in the future!');
-        return};
-      if (selectedDates[0] > new Date()) {
-        startBtn.disabled =  false;
-      }
-
-      startBtn.addEventListener('click', () => {
-        startBtn.disabled = true;
-        intervalId = setInterval(() => {
-          const startData = selectedDates[0] - new Date;
-          const time =  convertMs(startData);
-          //console.log(time);
-
-          overrwriteTime(time);
-          //console.log(startData);
-
-          if (startData < 1000) {
+      enableTime: true,
+      time_24hr: true,
+      defaultDate: new Date(),
+      minuteIncrement: 1,
+      onClose(selectedDates) {
+        console.log(selectedDates[0]);
+        // selectedData = selectedDates[0];
+        // console.log(selectedData); 
+        if (selectedDates[0] <= new Date()) {
+            Notify.failure('Please choose a date in the future!');
+            return};
+        if (selectedDates[0] > new Date()) {
             startBtn.disabled =  false;
-            clearInterval(intervalId);
-            input.value = '';
-          }
-        }, 1000);   
-      });
-    }
-};
+         }
+      }
+    };
 
-flatpickr(input, options); 
+ const fp = flatpickr(input, options); 
+ console.log(fp.selectedDates[0].getTime());
+
+
+startBtn.addEventListener('click', () => {
+  intervalId = setInterval(()=>{
+  const startData = fp.selectedDates[0].getTime() - Date.now();
+  console.log(startData);
+  const time =  convertMs(startData);
+  console.log(time);
+  
+  overrwriteTime(time);
+  console.log(startData);
+  
+  if (startData < 1000) {
+  startBtn.disabled =  false;
+  clearInterval(intervalId);
+  input.value = '';
+  }
+},1000);
+})
+
+//------------1-variant------------
+// const options = {
+//     enableTime: true,
+//     time_24hr: true,
+//     defaultDate: new Date(),
+//     minuteIncrement: 1,
+//     onClose(selectedDates) {
+//       //console.log(selectedDates[0]);
+            
+//       if (selectedDates[0] <= new Date()) {
+        
+//         Notify.failure('Please choose a date in the future!');
+//         return};
+//       if (selectedDates[0] > new Date()) {
+//         startBtn.disabled =  false;
+//       }
+
+//       startBtn.addEventListener('click', () => {
+//         startBtn.disabled = true;
+//         intervalId = setInterval(() => {
+//           const startData = selectedDates[0] - new Date;
+//           const time =  convertMs(startData);
+//           //console.log(time);
+
+//           overrwriteTime(time);
+//           //console.log(startData);
+
+//           if (startData < 1000) {
+//             startBtn.disabled =  false;
+//             clearInterval(intervalId);
+//             input.value = '';
+//           }
+//         }, 1000);   
+//       });
+//     }
+// };
+
+// flatpickr(input, options); 
 
 function overrwriteTime ({ days, hours, minutes, seconds }) {
   refs.days.textContent = `${days}`;
@@ -65,7 +107,7 @@ function overrwriteTime ({ days, hours, minutes, seconds }) {
 function addLeadingZero(value) {
   return String(value).padStart(2, '0')
 }
-addLeadingZero
+
 function convertMs(ms) {
     // Number of milliseconds per unit of time
     const second = 1000;
