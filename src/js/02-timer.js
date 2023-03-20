@@ -24,9 +24,8 @@ const options = {
       defaultDate: new Date(),
       minuteIncrement: 1,
       onClose(selectedDates) {
-        console.log(selectedDates[0]);
-        // selectedData = selectedDates[0];
-        // console.log(selectedData); 
+        //console.log(selectedDates[0]);
+        
         if (selectedDates[0] <= new Date()) {
             Notify.failure('Please choose a date in the future!');
             return};
@@ -37,15 +36,15 @@ const options = {
     };
 
  const fp = flatpickr(input, options); 
- console.log(fp.selectedDates[0].getTime());
+ //console.log(fp.selectedDates[0].getTime());
 
 
 startBtn.addEventListener('click', () => {
   intervalId = setInterval(()=>{
   const startData = fp.selectedDates[0].getTime() - Date.now();
-  console.log(startData);
-  //const time =  convertMs(startData);
-  console.log(time);
+  //console.log(startData);
+  const time =  convertMs(startData);
+  //console.log(time);
   
   overrwriteTime(time);
   
